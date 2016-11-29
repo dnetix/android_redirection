@@ -11,5 +11,11 @@
             android:key="trankey"
             android:title="@string/preference_trankey"
             android:summary="@string/preference_summary_trankey" />
+        <ListPreference
+            android:key="url"
+            android:title="@string/preference_url"
+            android:summary="@string/preference_summary_url"
+            android:entries="@array/environments"
+            android:entryValues="@array/environmentsValues" />
     </PreferenceCategory>
 </PreferenceScreen>

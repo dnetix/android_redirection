@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="environments">
+        <item name="0">@string/environment_development</item>
+        <item name="1">@string/environment_testing</item>
+        <item name="2">@string/environment_production</item>
+    </string-array>
+    <string-array name="environmentsValues">
+        <item name="0">http://redirection.dnetix.co/</item>
+        <item name="1">https://test.placetopay.com/redirection/</item>
+        <item name="2">https://api.placetopay.com/redirection/</item>
+    </string-array>
+</resources>

@@ -42,6 +42,6 @@ public class IndexActivity extends AppCompatActivity {
 
     public void testing(View v) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Log.i("appx", sharedPreferences.getString("login", ""));
+        Log.i("appx", sharedPreferences.getString("url", ""));
     }
 }

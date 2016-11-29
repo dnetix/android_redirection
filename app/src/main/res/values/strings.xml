@@ -8,5 +8,11 @@
     <string name="preference_summary_login">Identificador</string>
     <string name="preference_trankey">TranKey</string>
     <string name="preference_summary_trankey">Llave transaccional</string>
+    <string name="preference_url">Ambiente</string>
+    <string name="preference_summary_url">Url del servidor</string>
     <string name="title_activity_settings">SettingsActivity</string>
+
+    <string name="environment_development">Desarrollo</string>
+    <string name="environment_testing">Pruebas</string>
+    <string name="environment_production">Producción</string>
 </resources>
