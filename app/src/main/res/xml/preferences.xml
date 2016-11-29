@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/preference_group_general"
+        android:key="general">
+        <EditTextPreference
+            android:key="login"
+            android:title="@string/preference_login"
+            android:summary="@string/preference_summary_login" />
+        <EditTextPreference
+            android:key="trankey"
+            android:title="@string/preference_trankey"
+            android:summary="@string/preference_summary_trankey" />
+    </PreferenceCategory>
+</PreferenceScreen>

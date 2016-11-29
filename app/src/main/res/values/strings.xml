@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">TestingApp</string>
+    <string name="app_name">Redirection Test</string>
+    <string name="button_testing">Do Test</string>
+
+    <string name="menu_settings">Settings</string>
+    <string name="preference_group_general">General</string>
+    <string name="preference_login">Login</string>
+    <string name="preference_summary_login">Identificador</string>
+    <string name="preference_trankey">TranKey</string>
+    <string name="preference_summary_trankey">Llave transaccional</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 </resources>
