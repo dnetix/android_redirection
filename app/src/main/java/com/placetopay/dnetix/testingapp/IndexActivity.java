@@ -11,6 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.placetopay.dnetix.container.IoCWrapper;
+import com.placetopay.dnetix.redirection.Entities.RedirectRequest;
+import com.placetopay.dnetix.redirection.PlacetopayApi;
+
 public class IndexActivity extends AppCompatActivity {
 
     Button testButton;
@@ -42,6 +46,19 @@ public class IndexActivity extends AppCompatActivity {
 
     public void testing(View v) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Log.i("appx", sharedPreferences.getString("url", ""));
+
+        IoCWrapper.getInstance().setPlacetopayApi(new PlacetopayApi(
+                sharedPreferences.getString("login", ""),
+                sharedPreferences.getString("trankey", ""),
+                sharedPreferences.getString("url", "")
+        ));
+
+        RedirectRequest redirectRequest = new RedirectRequest();
+        redirectRequest.getBuyer().setName("Diego").setSurname("Calle");
+        redirectRequest.getPayment().getAmount().setTotal((double) 100000).setCurrency("COP");
+
+        CreateAsyncTask createAsyncTask = new CreateAsyncTask();
+        createAsyncTask.execute(redirectRequest);
+
     }
 }
