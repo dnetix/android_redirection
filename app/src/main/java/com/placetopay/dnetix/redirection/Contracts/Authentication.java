@@ -28,7 +28,7 @@ public class Authentication implements Mappable {
 
     public Authentication create() {
         this.nonce = new BigInteger(130, new SecureRandom()).toString();
-        this.seed = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'", Locale.getDefault())).format(new Date());
+        this.seed = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ", Locale.getDefault())).format(new Date());
         return this;
     }
 

@@ -15,6 +15,9 @@ import com.placetopay.dnetix.container.IoCWrapper;
 import com.placetopay.dnetix.redirection.Entities.RedirectRequest;
 import com.placetopay.dnetix.redirection.PlacetopayApi;
 
+import java.util.Locale;
+import java.util.TimeZone;
+
 public class IndexActivity extends AppCompatActivity {
 
     Button testButton;
@@ -23,7 +26,6 @@ public class IndexActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
-
     }
 
     @Override
@@ -59,6 +61,5 @@ public class IndexActivity extends AppCompatActivity {
 
         CreateAsyncTask createAsyncTask = new CreateAsyncTask();
         createAsyncTask.execute(redirectRequest);
-
     }
 }

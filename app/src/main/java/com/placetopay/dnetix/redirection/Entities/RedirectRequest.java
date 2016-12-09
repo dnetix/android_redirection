@@ -25,7 +25,7 @@ public class RedirectRequest implements Mappable {
         this.payment = new Payment();
 
         // Setting a default expiration
-        this.expiration = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'", Locale.getDefault())).format(new Date(Calendar.getInstance().getTimeInMillis() + (300 * 60000)));
+        this.expiration = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ", Locale.getDefault())).format(new Date(Calendar.getInstance().getTimeInMillis() + (300 * 60000)));
     }
 
     public Person getPayer() {
@@ -77,7 +77,8 @@ public class RedirectRequest implements Mappable {
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
-        map.put("payer", getPayer().toMap());
+        if (!getPayer().isEmpty())
+            map.put("payer", getPayer().toMap());
         map.put("buyer", getBuyer().toMap());
         map.put("payment", getPayment().toMap());
         map.put("expiration", getExpiration());

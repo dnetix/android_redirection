@@ -49,7 +49,8 @@ public class Payment implements Mappable {
         map.put("reference", getReference());
         map.put("description", getDescription());
         map.put("amount", getAmount().toMap());
-        map.put("shipping", getShipping().toMap());
+        if (!getShipping().isEmpty())
+            map.put("shipping", getShipping().toMap());
         return map;
     }
 }

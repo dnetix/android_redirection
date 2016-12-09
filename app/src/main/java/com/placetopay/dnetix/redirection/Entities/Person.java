@@ -87,6 +87,12 @@ public class Person implements Mappable {
         return this;
     }
 
+    public boolean isEmpty() {
+        if (getName() == null)
+            return true;
+        return false;
+    }
+
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();

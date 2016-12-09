@@ -1,6 +1,7 @@
 package com.placetopay.dnetix.redirection.Implementations;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.placetopay.dnetix.container.JSONHelper;
 import com.placetopay.dnetix.redirection.Contracts.Authentication;
@@ -70,6 +71,10 @@ public class RestBasicClient implements Client {
                 content.append(line).append("\n");
             }
             bufferedReader.close();
+
+            JSONObject response = new JSONObject(content.toString());
+
+            Log.i("appx", ((JSONObject)response.get("status")).get("message").toString());
 
             // Prints the response
             Log.i("appx", String.valueOf(responseCode) + ": " + content.toString());
