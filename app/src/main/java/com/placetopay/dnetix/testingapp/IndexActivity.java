@@ -10,22 +10,43 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.placetopay.dnetix.container.IoCWrapper;
 import com.placetopay.dnetix.redirection.Entities.RedirectRequest;
 import com.placetopay.dnetix.redirection.PlacetopayApi;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
 public class IndexActivity extends AppCompatActivity {
 
     Button testButton;
+    EditText txtName;
+    EditText txtSurname;
+    EditText txtEmail;
+    EditText txtAmount;
+    EditText txtReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
+
+        txtName = (EditText) findViewById(R.id.txtName);
+        txtSurname = (EditText) findViewById(R.id.txtSurname);
+        txtEmail = (EditText) findViewById(R.id.txtEmail);
+        txtAmount = (EditText) findViewById(R.id.txtAmount);
+        txtReference = (EditText) findViewById(R.id.txtReference);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        txtReference.setText((new SimpleDateFormat("'TEST_'yyyyMMdd_HHmm", Locale.getDefault())).format(new Date()));
     }
 
     @Override
@@ -56,8 +77,18 @@ public class IndexActivity extends AppCompatActivity {
         ));
 
         RedirectRequest redirectRequest = new RedirectRequest();
-        redirectRequest.getBuyer().setName("Diego").setSurname("Calle");
-        redirectRequest.getPayment().getAmount().setTotal((double) 100000).setCurrency("COP");
+        redirectRequest.getBuyer()
+                .setName(txtName.getText().toString())
+                .setSurname(txtSurname.getText().toString());
+
+        redirectRequest.getPayment()
+                .setReference(txtReference.getText().toString())
+                .getAmount().setTotal(Double.valueOf(txtAmount.getText().toString()))
+                .setCurrency("COP");
+
+        redirectRequest.setReturnUrl("http://dnetix.co/ping")
+            .setIpAddress("127.0.0.1")
+            .setUserAgent("Android APP");
 
         CreateAsyncTask createAsyncTask = new CreateAsyncTask();
         createAsyncTask.execute(redirectRequest);

@@ -10,12 +10,78 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.placetopay.dnetix.testingapp.IndexActivity">
 
+    <LinearLayout
+        android:id="@+id/personName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/txtName"
+            android:hint="Name"
+            android:text="Diego" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Calle"
+            android:ems="10"
+            android:id="@+id/txtSurname"
+            android:hint="Surname" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/personName"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dcallem88@msn.com"
+            android:ems="10"
+            android:id="@+id/txtEmail"
+            android:inputType="textEmailAddress"
+            android:hint="Email" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/txtAmount"
+            android:text="100000"
+            android:hint="Amount" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:layout_below="@+id/txtAmount"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:id="@+id/txtReference"
+            android:hint="Reference" />
+    </LinearLayout>
+
     <Button
         android:text="@string/button_testing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:onClick="testing"
-        android:id="@+id/btn_test" />
+        android:id="@+id/btn_test"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
