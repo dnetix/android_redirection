@@ -84,6 +84,7 @@ public class RestBasicClient implements Client {
                 redirectResponse.setProcessUrl(response.getString("processUrl"))
                         .setRequestId(response.getString("requestId"));
 
+            Log.i("appx", "Returning the response");
             return redirectResponse;
         } catch (FileNotFoundException e) {
             Log.i("appx", "FNFE: " + e.toString() + " ++ " + e.getMessage());

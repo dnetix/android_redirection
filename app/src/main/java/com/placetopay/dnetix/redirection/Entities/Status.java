@@ -15,6 +15,10 @@ public class Status implements Mappable {
     private String reason;
     private String date;
 
+    public Status() {
+        this.status = "FAILED";
+    }
+
     public String getStatus() {
         return status;
     }

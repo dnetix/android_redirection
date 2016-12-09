@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -25,7 +28,7 @@ import java.util.TimeZone;
 
 public class IndexActivity extends AppCompatActivity implements ResponseHandler {
 
-    Button testButton;
+    WebView webView;
     EditText txtName;
     EditText txtSurname;
     EditText txtEmail;
@@ -42,6 +45,8 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
         txtEmail = (EditText) findViewById(R.id.txtEmail);
         txtAmount = (EditText) findViewById(R.id.txtAmount);
         txtReference = (EditText) findViewById(R.id.txtReference);
+
+        webView = (WebView) findViewById(R.id.webView);
     }
 
     @Override
@@ -105,6 +110,10 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
             // Display on browser
             if (redirectResponse.getStatus().getStatus().equals("OK")) {
                 Log.i("appx", "It was ok: " + redirectResponse.getProcessUrl());
+
+                webView.setVisibility(View.VISIBLE);
+                webView.setWebChromeClient(new WebChromeClient());
+                webView.loadUrl(redirectResponse.getProcessUrl());
             }
         }
     }
