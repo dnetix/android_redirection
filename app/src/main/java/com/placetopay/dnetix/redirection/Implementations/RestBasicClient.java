@@ -40,24 +40,28 @@ public class RestBasicClient implements Client {
         try {
             Log.i("appx", this.url + "api/session");
             URL url = new URL(this.url + "api/session");
-//            URL url = new URL("https://dnetix.co/ping");
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setDoOutput(true);
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestProperty("Accept", "application/json");
+            HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
+            httpConnection.setDoOutput(true);
+            httpConnection.setRequestMethod("POST");
+            httpConnection.setRequestProperty("Content-Type", "application/json");
+            httpConnection.setRequestProperty("Accept","*/*");
             // Not required
             // urlConnection.setRequestProperty("Content-Length", String.valueOf(input.getBytes().length));
 
-            // Construct manually a JSON object in Java, for testing purposes an object with an object
-
             // Writes the JSON parsed as string to the connection
-            DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
+            DataOutputStream wr = new DataOutputStream(httpConnection.getOutputStream());
             wr.write(data.toString().getBytes());
             Log.i("appx", data.toString());
+            Integer responseCode = httpConnection.getResponseCode();
+
+            BufferedReader bufferedReader;
 
             // Creates a reader buffer
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            if (responseCode > 199 && responseCode < 300) {
+                bufferedReader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
+            } else {
+                bufferedReader = new BufferedReader(new InputStreamReader(httpConnection.getErrorStream()));
+            }
 
             // To receive the response
             StringBuilder content = new StringBuilder();
@@ -68,7 +72,7 @@ public class RestBasicClient implements Client {
             bufferedReader.close();
 
             // Prints the response
-            Log.i("appx", content.toString());
+            Log.i("appx", String.valueOf(responseCode) + ": " + content.toString());
         } catch (FileNotFoundException e) {
             Log.i("appx", "FNFE: " + e.toString() + " ++ " + e.getMessage());
         } catch (Exception e) {
