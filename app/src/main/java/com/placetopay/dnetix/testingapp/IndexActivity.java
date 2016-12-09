@@ -14,14 +14,16 @@ import android.widget.EditText;
 
 import com.placetopay.dnetix.container.IoCWrapper;
 import com.placetopay.dnetix.redirection.Entities.RedirectRequest;
+import com.placetopay.dnetix.redirection.Entities.RedirectResponse;
 import com.placetopay.dnetix.redirection.PlacetopayApi;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 
-public class IndexActivity extends AppCompatActivity {
+public class IndexActivity extends AppCompatActivity implements ResponseHandler {
 
     Button testButton;
     EditText txtName;
@@ -91,6 +93,19 @@ public class IndexActivity extends AppCompatActivity {
             .setUserAgent("Android APP");
 
         CreateAsyncTask createAsyncTask = new CreateAsyncTask();
+        createAsyncTask.setHandler(this);
         createAsyncTask.execute(redirectRequest);
+    }
+
+    @Override
+    public void handleResponse(String type, Object response) {
+        if (type.equals("request")) {
+            RedirectResponse redirectResponse = (RedirectResponse) response;
+
+            // Display on browser
+            if (redirectResponse.getStatus().getStatus().equals("OK")) {
+                Log.i("appx", "It was ok: " + redirectResponse.getProcessUrl());
+            }
+        }
     }
 }

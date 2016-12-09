@@ -39,7 +39,6 @@ public class RestBasicClient implements Client {
         JSONObject data = JSONHelper.parseMap(map);
 
         try {
-            Log.i("appx", this.url + "api/session");
             URL url = new URL(this.url + "api/session");
             HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
             httpConnection.setDoOutput(true);
@@ -52,7 +51,6 @@ public class RestBasicClient implements Client {
             // Writes the JSON parsed as string to the connection
             DataOutputStream wr = new DataOutputStream(httpConnection.getOutputStream());
             wr.write(data.toString().getBytes());
-            Log.i("appx", data.toString());
             Integer responseCode = httpConnection.getResponseCode();
 
             BufferedReader bufferedReader;
@@ -73,11 +71,20 @@ public class RestBasicClient implements Client {
             bufferedReader.close();
 
             JSONObject response = new JSONObject(content.toString());
+            RedirectResponse redirectResponse = new RedirectResponse();
 
-            Log.i("appx", ((JSONObject)response.get("status")).get("message").toString());
+            JSONObject status = (JSONObject) response.get("status");
+            redirectResponse.getStatus()
+                .setStatus(status.get("status").toString())
+                .setMessage(status.getString("message"))
+                .setReason(status.getString("reason"))
+                .setDate(status.getString("date"));
 
-            // Prints the response
-            Log.i("appx", String.valueOf(responseCode) + ": " + content.toString());
+            if (response.has("processUrl"))
+                redirectResponse.setProcessUrl(response.getString("processUrl"))
+                        .setRequestId(response.getString("requestId"));
+
+            return redirectResponse;
         } catch (FileNotFoundException e) {
             Log.i("appx", "FNFE: " + e.toString() + " ++ " + e.getMessage());
         } catch (Exception e) {
@@ -86,4 +93,5 @@ public class RestBasicClient implements Client {
 
         return null;
     }
+
 }
