@@ -34,6 +34,7 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
     EditText txtEmail;
     EditText txtAmount;
     EditText txtReference;
+    Button btnTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +48,14 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
         txtReference = (EditText) findViewById(R.id.txtReference);
 
         webView = (WebView) findViewById(R.id.webView);
+        btnTest = (Button) findViewById(R.id.btn_test);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        txtReference.setText((new SimpleDateFormat("'TEST_'yyyyMMdd_HHmm", Locale.getDefault())).format(new Date()));
+        txtReference.setText((new SimpleDateFormat("'TEST_'yyyyMMdd_HHmmss", Locale.getDefault())).format(new Date()));
     }
 
     @Override
@@ -93,7 +95,7 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
                 .getAmount().setTotal(Double.valueOf(txtAmount.getText().toString()))
                 .setCurrency("COP");
 
-        redirectRequest.setReturnUrl("http://dnetix.co/ping")
+        redirectRequest.setReturnUrl("http://192.168.1.13/html")
             .setIpAddress("127.0.0.1")
             .setUserAgent("Android APP");
 
@@ -111,9 +113,16 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
             if (redirectResponse.getStatus().getStatus().equals("OK")) {
                 Log.i("appx", "It was ok: " + redirectResponse.getProcessUrl());
 
+                webView.getSettings().setJavaScriptEnabled(true);
+                webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+                webView.clearCache(true);
+                webView.clearHistory();
                 webView.setVisibility(View.VISIBLE);
                 webView.setWebChromeClient(new WebChromeClient());
+                webView.setWebViewClient(new WebViewClient());
                 webView.loadUrl(redirectResponse.getProcessUrl());
+
+                btnTest.setVisibility(View.INVISIBLE);
             }
         }
     }
