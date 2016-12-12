@@ -121,9 +121,11 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
                 webView.setWebChromeClient(new WebChromeClient());
                 webView.setWebViewClient(new WebViewClient());
                 webView.loadUrl(redirectResponse.getProcessUrl());
+                webView.addJavascriptInterface(new WebAppInterface(this), "Android");
 
                 btnTest.setVisibility(View.INVISIBLE);
             }
         }
     }
+
 }
