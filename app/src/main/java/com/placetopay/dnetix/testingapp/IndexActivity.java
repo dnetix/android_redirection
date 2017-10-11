@@ -87,11 +87,15 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
 
         RedirectRequest redirectRequest = new RedirectRequest();
         redirectRequest.getBuyer()
+                .setDocumentType("CC")
+                .setDocument("1040035000")
+                .setEmail("dcallem88@msn.com")
                 .setName(txtName.getText().toString())
                 .setSurname(txtSurname.getText().toString());
 
         redirectRequest.getPayment()
                 .setReference(txtReference.getText().toString())
+                .setDescription("Testing purchase")
                 .getAmount().setTotal(Double.valueOf(txtAmount.getText().toString()))
                 .setCurrency("COP");
 
@@ -116,6 +120,9 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
                 webView.getSettings().setJavaScriptEnabled(true);
                 webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
                 webView.clearCache(true);
+                if (webView.getContext() == null) {
+                    Log.i("appx", "No context for WebView");
+                }
                 webView.clearHistory();
                 webView.setVisibility(View.VISIBLE);
                 webView.setWebChromeClient(new WebChromeClient());
