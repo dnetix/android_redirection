@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -47,11 +48,15 @@ public class RestBasicClient implements Client {
             httpConnection.setRequestProperty("Accept","*/*");
             // Not required
             // urlConnection.setRequestProperty("Content-Length", String.valueOf(input.getBytes().length));
-
             // Writes the JSON parsed as string to the connection
             DataOutputStream wr = new DataOutputStream(httpConnection.getOutputStream());
             wr.write(data.toString().getBytes());
-            Integer responseCode = httpConnection.getResponseCode();
+            Integer responseCode;
+            try {
+                responseCode = httpConnection.getResponseCode();
+            } catch (IOException e) {
+                responseCode = 401;
+            }
 
             BufferedReader bufferedReader;
 
@@ -84,7 +89,6 @@ public class RestBasicClient implements Client {
                 redirectResponse.setProcessUrl(response.getString("processUrl"))
                         .setRequestId(response.getString("requestId"));
 
-            Log.i("appx", "Returning the response");
             return redirectResponse;
         } catch (FileNotFoundException e) {
             Log.i("appx", "FNFE: " + e.toString() + " ++ " + e.getMessage());

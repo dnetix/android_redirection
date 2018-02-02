@@ -1,6 +1,7 @@
 package com.placetopay.dnetix.testingapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 
@@ -16,9 +17,16 @@ public class WebAppInterface {
 
     @JavascriptInterface
     public void closeView() {
-        IndexActivity indexActivity = (IndexActivity) context;
-        indexActivity.btnTest.setVisibility(View.VISIBLE);
-        indexActivity.btnTest.bringToFront();
-        indexActivity.webView.setVisibility(View.INVISIBLE);
+        ((IndexActivity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                IndexActivity activity = (IndexActivity) context;
+
+                activity.btnTest.setVisibility(View.VISIBLE);
+                activity.btnTest.bringToFront();
+                activity.webView.setVisibility(View.INVISIBLE);
+                activity.webView.destroy();
+            }
+        });
     }
 }

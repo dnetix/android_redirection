@@ -6,8 +6,8 @@
         <item name="2">@string/environment_production</item>
     </string-array>
     <string-array name="environmentsValues">
-        <item name="0">http://redirection.dnetix.co/</item>
+        <item name="0">http://192.168.254.168/redirection/</item>
         <item name="1">https://test.placetopay.com/redirection/</item>
-        <item name="2">https://api.placetopay.com/redirection/</item>
+        <item name="2">http://local.dev/redirection/</item>
     </string-array>
 </resources>

@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.placetopay.dnetix.container.IoCWrapper;
 import com.placetopay.dnetix.redirection.Entities.RedirectRequest;
@@ -80,16 +81,16 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         IoCWrapper.getInstance().setPlacetopayApi(new PlacetopayApi(
-                sharedPreferences.getString("login", ""),
-                sharedPreferences.getString("trankey", ""),
-                sharedPreferences.getString("url", "")
+                sharedPreferences.getString("login", "LOGIN_AQUI"),
+                sharedPreferences.getString("trankey", "TRANKEY_AQUI"),
+                sharedPreferences.getString("url", "https://test.placetopay.com/redirection/")
         ));
 
         RedirectRequest redirectRequest = new RedirectRequest();
         redirectRequest.getBuyer()
                 .setDocumentType("CC")
                 .setDocument("1040035000")
-                .setEmail("dcallem88@msn.com")
+                .setEmail("dnetix@gmail.com")
                 .setName(txtName.getText().toString())
                 .setSurname(txtSurname.getText().toString());
 
@@ -115,8 +116,6 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
 
             // Display on browser
             if (redirectResponse.getStatus().getStatus().equals("OK")) {
-                Log.i("appx", "It was ok: " + redirectResponse.getProcessUrl());
-
                 webView.getSettings().setJavaScriptEnabled(true);
                 webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
                 webView.clearCache(true);
@@ -127,10 +126,17 @@ public class IndexActivity extends AppCompatActivity implements ResponseHandler 
                 webView.setVisibility(View.VISIBLE);
                 webView.setWebChromeClient(new WebChromeClient());
                 webView.setWebViewClient(new WebViewClient());
-                webView.loadUrl(redirectResponse.getProcessUrl());
+
+                /*
+                 * Es importante agregar el display a la url para determinar que se carga desde un webview
+                 * de esta manera se lanzará el Android.closeView() en vez de la redirección
+                 */
+                webView.loadUrl(redirectResponse.getProcessUrl() + "?display=webview");
                 webView.addJavascriptInterface(new WebAppInterface(this), "Android");
 
                 btnTest.setVisibility(View.INVISIBLE);
+            } else {
+                Toast.makeText(this, redirectResponse.getStatus().getMessage(), Toast.LENGTH_LONG).show();
             }
         }
     }
